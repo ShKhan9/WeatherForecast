@@ -69,7 +69,7 @@ extension MainVC :  UITableViewDelegate  , UITableViewDataSource  {
         let item = tableSourceArr[indexPath.section].list[indexPath.row]
         cell.timelb.text = getTimeFromTimeStamp(item.dt)
         cell.windlb.text = "\(item.wind.speed)"
-        cell.templb.text = fromKeToSel(item.main.temp)
+        cell.templb.text = fromKelvinToCelsius(item.main.temp)
         let imgUrl = URL(string:"https://openweathermap.org/img/wn/" + item.weather.first!.icon + "@2x.png")!
         cell.img.loadImageWithUrl(imgUrl)
         return cell

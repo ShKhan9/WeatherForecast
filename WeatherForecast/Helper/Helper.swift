@@ -32,7 +32,7 @@ func getDayFromTimeStamp(_ timeStamp : Double) -> String {
     return dateString
 }
 
-func fromKeToSel(_ feh:Double) -> String {
-    let res = feh - 273.15
+func fromKelvinToCelsius(_ kelvin:Double) -> String {
+    let res = kelvin - 273.15
     return String(Int(res)) + "°"
 }
