@@ -77,7 +77,7 @@ extension MainVC :  UITableViewDelegate  , UITableViewDataSource  {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let item = tableSourceArr[section].list.first!
         let lbl = UILabel()
-        lbl.font = UIFont(name: "TimesNewRomanPSMT", size: 18)
+        lbl.font = UIFont(name: "TimesNewRomanPS-BoldMT", size: 18)
         lbl.text = "   " + getDateFromTimeStamp(Double(item.dt))
         return lbl
     }
