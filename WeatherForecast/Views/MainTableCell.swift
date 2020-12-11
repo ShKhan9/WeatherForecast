@@ -21,6 +21,16 @@ class MainTableCell: UITableViewCell {
         // Initialization code
     }
 
+    // configure cell with model
+    
+    func configure(_ item:List) {
+        self.timelb.text = getTimeFromTimeStamp(item.dt)
+        self.windlb.text = "\(item.wind.speed)"
+        self.templb.text = fromKelvinToCelsius(item.main.temp)
+        let imgUrl = URL(string:"https://openweathermap.org/img/wn/" + item.weather.first!.icon + "@2x.png")!
+        self.img.loadImageWithUrl(imgUrl)
+    }
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

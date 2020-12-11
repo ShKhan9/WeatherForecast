@@ -24,12 +24,15 @@ class MainVC: UIViewController {
         tableView.dataSource = self
         tableView.bounces = false
         tableView.register(UINib.init(nibName: "MainTableCell", bundle: nil), forCellReuseIdentifier: "cell")
-        
         // set current city to retieve it's data
         setCity()
+ 
+    }
+    // start getting data inside viewDidAppear so alert can be presented in case no internet
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         // start getting the data from the Api
         startCall()
-        
     }
     // set current city
     func setCity() {
@@ -37,15 +40,40 @@ class MainVC: UIViewController {
     }
     // call api to get data
     func startCall() {
+        if refreshSwitch.isOn {
+            // remote server call
+            if noNetwork() {
+                 self.showAlert("No internet connection")
+            }
+            else {
+                self.getData()
+            }
+        }
+        else {
+            // local file call
+            self.getData()
+        }
+    }
+    // start getting the data
+    func getData() {
         vm.getData(fromLocal:!refreshSwitch.isOn) { res in
-            if let res = res { 
+            if let res = res {
                 self.tableSourceArr = res
                 self.tableView.reloadData()
             }
             else {
-                
+                self.showAlert("Problem getting data")
             }
         }
+    }
+    // handle fail + no network parts
+    func showAlert(_ message:String) {
+        let alert = UIAlertController(title: "Error Message", message:message, preferredStyle:.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "ReTry", style: .default, handler: { (act) in
+            self.startCall()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     // switch change action
     @IBAction func switchChanged(_ sender: Any) {
@@ -67,11 +95,7 @@ extension MainVC :  UITableViewDelegate  , UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! MainTableCell
         let item = tableSourceArr[indexPath.section].list[indexPath.row]
-        cell.timelb.text = getTimeFromTimeStamp(item.dt)
-        cell.windlb.text = "\(item.wind.speed)"
-        cell.templb.text = fromKelvinToCelsius(item.main.temp)
-        let imgUrl = URL(string:"https://openweathermap.org/img/wn/" + item.weather.first!.icon + "@2x.png")!
-        cell.img.loadImageWithUrl(imgUrl)
+        cell.configure(item)
         return cell
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
