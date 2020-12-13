@@ -95,6 +95,7 @@ extension MainVC :  UITableViewDelegate  , UITableViewDataSource  {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! MainTableCell
         let item = tableSourceArr[indexPath.section].list[indexPath.row]
         cell.configure(item)
+        cell.sepView.isHidden = indexPath.row == tableSourceArr[indexPath.section].list.count - 1
         return cell
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {

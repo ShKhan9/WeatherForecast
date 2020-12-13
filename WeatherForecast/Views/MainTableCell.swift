@@ -15,6 +15,7 @@ class MainTableCell: UITableViewCell {
     @IBOutlet weak var img: ImageLoader!
     @IBOutlet weak var templb: UILabel!
     @IBOutlet weak var windlb: UILabel!
+    @IBOutlet weak var sepView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
