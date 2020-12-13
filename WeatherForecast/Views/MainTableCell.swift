@@ -29,6 +29,7 @@ class MainTableCell: UITableViewCell {
         self.templb.text = fromKelvinToCelsius(item.main.temp)
         let imgUrl = URL(string:"https://openweathermap.org/img/wn/" + item.weather.first!.icon + "@2x.png")!
         self.img.loadImageWithUrl(imgUrl)
+        self.selectionStyle = .none
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
