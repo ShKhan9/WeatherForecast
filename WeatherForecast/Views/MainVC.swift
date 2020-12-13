@@ -22,7 +22,6 @@ class MainVC: UIViewController {
         // set table delegate & dataSource to the vc then register the cell
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.bounces = false
         tableView.register(UINib.init(nibName: "MainTableCell", bundle: nil), forCellReuseIdentifier: "cell")
         // set current city to retieve it's data
         setCity()
@@ -104,6 +103,9 @@ extension MainVC :  UITableViewDelegate  , UITableViewDataSource  {
         lbl.font = UIFont(name: "TimesNewRomanPS-BoldMT", size: 16)
         lbl.text = "   " + getDateFromTimeStamp(Double(item.dt))
         return lbl
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 55
