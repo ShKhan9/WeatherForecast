@@ -102,6 +102,7 @@ extension MainVC :  UITableViewDelegate  , UITableViewDataSource  {
         let lbl = UILabel()
         lbl.font = UIFont(name: "TimesNewRomanPS-BoldMT", size: 16)
         lbl.text = "   " + getDateFromTimeStamp(Double(item.dt))
+        lbl.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         return lbl
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
